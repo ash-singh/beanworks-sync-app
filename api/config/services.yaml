@@ -1,0 +1,86 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    env(MONGODB_URL): ''
+    env(MONGODB_DB): ''
+    app.mongodb.dsn: mongodb://mongo:27017/
+    app.mongodb.database.name: beanworks
+
+    app.messenger.transport.dsn: amqp://guest:guest@rabbitmq:5672/%2f/messages
+
+    app.allowed.orgin: localhost:3000
+
+    app.xero.config:
+        oauth :
+            callback : http://localhost:8888
+            consumer_key : 'XIZYAZLAHNZOTEYR0BT7SPIG7DULAN'
+            consumer_secret : 'IR60SIH68DWJHJKXLMTJ8BM6DNRN0N'
+            rsa_private_key : |
+                -----BEGIN RSA PRIVATE KEY-----
+                MIICXQIBAAKBgQDqCbeNUBYj6IatNHWXG7GhyJodd15U9oWtpnstW210KkK5qUE1
+                90elHb/GbQHracRxTys3b3mGUQo6tegkY37CwCWAc87Zse1AFjTjlxzab6ETRIEw
+                kd7X//1fKY31kiq4oEXAMJ0br2picnRnj+dZoVO62eF+TfKtLqweRu6gHQIDAQAB
+                AoGBAOODerqXZk6WF4Z9furc8zvRZXDLwBpcZOvA8fHP9YF+K8uNLGWn9DAh0XK2
+                Oa1+7ocwbVTAu6TFV2pnuDrXtjsEcP9OkQZ2D74qxqy4QCLgO2I+wx6tquF/bfyn
+                uAHtX+l8wobVOyrZ/jBY9cS8s4QxLCwGZaR+tskBzSiUf7cBAkEA/6WhImYgtENc
+                smvMJbYgX5zy8lW1zCgjT2HKsKmcFooFtsC+DGS+WFlKs/kIbugCooTy66M267jR
+                CnfyG+4C4QJBAOpccuaF/sI3qm8CTgnll9md2Eo9jkP3sQ5g8il1GEcmjMjkRAA5
+                njKFYNjCsizh29GFZUoVswvOKDIZHMWGgL0CQQCW4hKwUsaKnhdf1u+ucke5JtDc
+                5mleDXKJr5YJnpFZXCzzJ98DQZJ2Yn0Mq7amfpjPgtg86x/HEFWQcCqdAWUBAkA2
+                8vIlxqkS1IZrfLjbbS+LYI0D6ybeHMcwvd5JhiDpHcrIl2yyONA0vD0W1Z99En+9
+                wm8bTbcrP20BQg4S6hRpAkB9XKBjYEVec6j9u1olp8R9y0GPrzQquYBLGbnfP5P8
+                l12b0Abpl+VmuWVC3fxNj1upxC6otBwaxbteddSkrRFM
+                -----END RSA PRIVATE KEY-----
+
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Login\Handler:
+        arguments:
+            $userRepository: '@app.repository.user'
+
+    App\User\User:
+        arguments:
+            $userRepository: '@app.repository.user'
+
+    App\MessageHandler\Sync\PipelineHandler:
+        arguments:
+            $logger: '@monolog.logger.app_messenger'
+        tags:
+        - name: messenger.message_handler
+          handles: App\Message\Sync\Pipeline
+
+    XeroPHP\Application\PrivateApplication:
+        class: XeroPHP\Application\PrivateApplication
+        arguments:
+            $config: '%app.xero.config%'
+
+    app.repository.user:
+        class: Doctrine\ODM\MongoDB\DocumentRepository
+        factory: 'doctrine_mongodb.odm.document_manager:getRepository'
+        arguments:
+        - App\Document\User
+

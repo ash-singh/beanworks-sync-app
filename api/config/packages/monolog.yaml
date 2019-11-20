@@ -1,0 +1,18 @@
+monolog:
+  use_microseconds: false
+
+  channels: ["app_messenger"]
+
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: debug
+      channels: ["!event"]
+
+    app_messenger:
+      type: stream
+      path: "%kernel.logs_dir%/api/messenger.log"
+      channels: ["app_messenger"]
+      max_files: 5
+
