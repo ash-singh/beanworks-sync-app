@@ -67,8 +67,8 @@ class Pipeline
             self::STATUS_START
         );
 
-        $this->pipelineManager->persist($pipeline);
         $this->pipelineManager->persist($user);
+        $this->pipelineManager->persist($pipeline);
 
         $this->pipelineManager->flush();
 

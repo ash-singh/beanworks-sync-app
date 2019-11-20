@@ -14,14 +14,30 @@ const columns = [
         name: 'Status',
         selector: 'status',
         sortable: true,
-        right: true,
+    },
+
+    {
+        name: 'Total',
+        selector: 'total_count',
+        sortable: false,
+    },
+
+    {
+        name: 'Failed',
+        selector: 'failed_count',
+        sortable: false,
+    },
+
+    {
+        name: 'Success',
+        selector: 'success_count',
+        sortable: false,
     },
 
     {
         name: 'DateTime',
         selector: 'created_on.date',
         sortable: true,
-        right: true,
     },
 ];
 
@@ -65,6 +81,7 @@ class Sync extends Component {
             let responseJson = result;
             if (responseJson.status === "OK" && responseJson.message) {
                 this.setState({success_message: responseJson.message});
+                this.forceUpdate();
             } else {
                 this.setState({failure_message: responseJson.message});
             }
@@ -102,25 +119,11 @@ class Sync extends Component {
                             <div className="success">{ this.state.success_message } </div>
                         </div>
 
-                        <h3> Pipeline Count: { this.state.record_count }</h3>
                     </div>
-                    {/*<ol className="item">*/}
-                        {/*{*/}
-                            {/*pipelines.map(pipeline => (*/}
-                                {/*<li key={pipeline.id} align="start">*/}
-                                    {/*<div>*/}
-                                    {/*Operation: <p className="title">{pipeline.operation}</p>*/}
-                                    {/*Status: <p className="body">{pipeline.status}</p>*/}
-                                    {/*DateTime: <p className="body">{pipeline.created_on.date}</p>*/}
-                                    {/*</div>*/}
-                                {/*</li>*/}
 
-                            {/*))*/}
-                        {/*}*/}
-                    {/*</ol>*/}
 
                     <DataTable
-                        title="Arnold Movies"
+                        title="Data Sync Pipelines"
                         columns={columns}
                         data={pipelines}
                     />

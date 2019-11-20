@@ -185,9 +185,9 @@ class Pipeline
     }
 
     /**
-     * @param bool $status
+     * @param string $status
      */
-    public function setStatus(bool $status): void
+    public function setStatus(string $status): void
     {
         $this->status = $status;
     }

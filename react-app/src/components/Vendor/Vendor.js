@@ -1,6 +1,34 @@
 import React, {Component} from 'react';
+import DataTable from 'react-data-table-component';
+
 import './Vendor.css';
 import {FetchVendors} from "../../services/FetchVendors";
+
+const columns = [
+    {
+        name: 'Name',
+        selector: 'name',
+        sortable: true,
+    },
+
+    {
+        name: 'Email',
+        selector: 'email',
+        sortable: false,
+    },
+
+    {
+        name: 'Status',
+        selector: 'status',
+        sortable: true,
+    },
+
+    {
+        name: 'Updated On',
+        selector: 'updated_on.date',
+        sortable: true,
+    },
+];
 
 class Vendor extends Component {
     constructor(props){
@@ -58,21 +86,14 @@ class Vendor extends Component {
                         <a href="/sync" className="button ">Database Management</a>
                         <h2>Vendor</h2>
                         <a href="/vendor" className="button success">Refresh</a>
-                        <h3> Total Account: { this.state.record_count }</h3>
+                        <h3> Total Records: { this.state.record_count }</h3>
                     </div>
-                    <ol className="item">
-                        {
-                            vendors.map(vendor => (
-                                <li key={vendor.id} align="start">
-                                    <div>
-                                        <p className="title">{vendor.name}</p>
-                                        <p className="body">{vendor.status}</p>
-                                    </div>
-                                </li>
 
-                            ))
-                        }
-                    </ol>
+                    <DataTable
+                        title="Vendors"
+                        columns={columns}
+                        data={vendors}
+                    />
                 </div>
             );
         }

@@ -46,7 +46,7 @@ class Vendor
             $this->pipelineLog->itemFetchFromErpSuccess($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
 
         } catch (\Exception $exception) {
-            $this->logger->error('Failed to fetch contacts from XERO', $exception->getMessage());
+            $this->logger->error('Failed to fetch contacts from XERO', [$exception->getMessage()]);
             $this->pipelineLog->itemFetchFromErpFailed($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
             return;
         }

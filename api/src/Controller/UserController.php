@@ -21,12 +21,12 @@ class UserController extends AbstractController
     /**
      * @Route(path="/login", name="login", methods={"POST","HEAD"})
      */
-    public function login(Request $request, Handler $loginhandler)
+    public function login(Request $request, Handler $loginhandler): JsonResponse
     {
-        $postedData = json_decode($request->getContent());
+        $postedData = \json_decode($request->getContent(), false);
 
         if (empty($postedData->email) || empty($postedData->password)) {
-            return new JsonResponse(['status' => 'KO', 'message' => 'Please provide username and password'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['status' => 'KO', 'message' => 'Please provide email and password'], Response::HTTP_BAD_REQUEST);
         }
 
         $credential = new Credentials($postedData->email, $postedData->password);
@@ -48,7 +48,7 @@ class UserController extends AbstractController
     /**
      * @Route(path="/logout", name="logout")
      */
-    public function logout(Request $request)
+    public function logout(): JsonResponse
     {
         return new JsonResponse(['status' => 'success', 'data' => []], Response::HTTP_OK);
     }

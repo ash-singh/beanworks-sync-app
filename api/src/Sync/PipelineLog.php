@@ -33,6 +33,7 @@ class PipelineLog
         $pipeline->setStatus(Pipeline::STATUS_IN_PROGRESS);
         $pipeline->setUpdatedDate(new \DateTime());
 
+        $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
         $this->documentManager->flush();
 
@@ -47,8 +48,10 @@ class PipelineLog
             'Started to sync items from ERP'
         );
 
-        $this->documentManager->persist($pipelineLog);
+        $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
+        $this->documentManager->persist($pipelineLog);
+
 
         $this->documentManager->flush();
 
@@ -72,9 +75,11 @@ class PipelineLog
     public function updateRecordStats(PipelineDocument $pipeline, int $total, int $failed): void
     {
         $pipeline->setFailedRecords($failed);
+        $pipeline->setSuccessRecords($total - $failed);
         $pipeline->setTotalRecords($total);
         $pipeline->setUpdatedDate(new \DateTime());
 
+        $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
         $this->documentManager->flush();
     }
@@ -87,8 +92,9 @@ class PipelineLog
             $detail
         );
 
-        $this->documentManager->persist($pipelineLog);
+        $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
+        $this->documentManager->persist($pipelineLog);
 
         $this->documentManager->flush();
     }
@@ -98,6 +104,7 @@ class PipelineLog
         $pipeline->setStatus(Pipeline::STATUS_END);
         $pipeline->setUpdatedDate(new \DateTime());
 
+        $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
         $this->documentManager->flush();
 

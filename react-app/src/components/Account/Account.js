@@ -1,6 +1,39 @@
 import React, {Component} from 'react';
+import DataTable from 'react-data-table-component';
+
 import './Account.css';
 import {FetchAccounts} from "../../services/FetchAccounts";
+
+const columns = [
+    {
+        name: 'Name',
+        selector: 'name',
+        sortable: true,
+    },
+    {
+        name: 'Status',
+        selector: 'status',
+        sortable: true,
+    },
+
+    {
+        name: 'Bank Account Number',
+        selector: 'bank_account_number',
+        sortable: false,
+    },
+
+    {
+        name: 'Bank Account Type',
+        selector: 'bank_account_type',
+        sortable: false,
+    },
+
+    {
+        name: 'Updated On',
+        selector: 'updated_on.date',
+        sortable: true,
+    },
+];
 
 class Account extends Component {
 
@@ -59,24 +92,15 @@ class Account extends Component {
                         <a href="/sync" className="button ">Database Management</a>
                         <h2>Account</h2>
                         <a href="/account" className="button success">Refresh</a>
-                        <h3> Total Account: { this.state.record_count }</h3>
+                        <h3> Total Records: { this.state.record_count }</h3>
                     </div>
-                    <ol className="item">
-                        {
-                            accounts.map(account => (
-                                <li key={account.id} align="start">
-                                    <div>
-                                        Name: <p className="title">{account.name}</p>
-                                        Status: <p className="body">{account.status}</p>
-                                        Bank Account Number: <p className="body">{account.bank_account_number}</p>
-                                        Account ID: <p className="body">{account.account_id}</p>
-                                        Bank Account Type: <p className="body">{account.bank_account_type}</p>
-                                    </div>
-                                </li>
 
-                            ))
-                        }
-                    </ol>
+                    <DataTable
+                        title="Account"
+                        columns={columns}
+                        data={accounts}
+                    />
+
                 </div>
             );
         }

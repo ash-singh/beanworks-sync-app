@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\MessageHandler\Sync\PipelineHandler;
 use App\Sync\Pipeline;
 use App\User\User;
 use App\Xero\Account;
@@ -25,18 +26,17 @@ class SyncController extends AbstractController
     /**
      * @Route(path="", name="create", methods={"POST"})
      */
-    public function index(Vendor $account, Pipeline $pipelineManager, Request $request, User $userManager, LoggerInterface $logger)
+    public function index(Vendor $account, Pipeline $pipelineManager, Request $request, User $userManager, LoggerInterface $logger, PipelineHandler $pipelinehandler)
     {
         $token = $request->headers->get('api-token');
 
-        if (null == $token) {
+        if (null === $token) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Please pass api-token in header',
             ], Response::HTTP_BAD_REQUEST);
         }
-        $user = $userManager->getUserFromToken($token);
 
-        if (empty($user)) {
+        if (null === ($user = $userManager->getUserFromToken($token))) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Invalid token',
             ], Response::HTTP_UNAUTHORIZED);
@@ -51,7 +51,8 @@ class SyncController extends AbstractController
                 'operation' => $pipeline->getOperation(),
                 'pipeline_id' => $pipeline->getPipelineId()
             ]);
-            $this->dispatchMessage(new PipelineMessage($pipeline));
+            //$this->dispatchMessage(new PipelineMessage($pipeline));
+            $pipelinehandler(new PipelineMessage($pipeline));
 
         }catch (MongoDBException $mongoDBException) {
             return new JsonResponse(['status' => 'KO', 'message' => 'Sync is initialized failed'], Response::HTTP_BAD_REQUEST);
@@ -67,14 +68,13 @@ class SyncController extends AbstractController
     {
         $token = $request->headers->get('api-token');
 
-        if (null == $token) {
+        if (null === $token) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Please pass api-token in header',
             ], Response::HTTP_BAD_REQUEST);
         }
-        $user = $userManager->getUserFromToken($token);
 
-        if (empty($user)) {
+        if (null === ($user = $userManager->getUserFromToken($token))) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Invalid token',
             ], Response::HTTP_UNAUTHORIZED);

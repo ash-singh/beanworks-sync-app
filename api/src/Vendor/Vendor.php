@@ -30,11 +30,7 @@ class Vendor
     {
         $vendorList = [];
         foreach ($this->getVendors($user->getUserId()) as $vendor) {
-            $vendorList[] = [
-                'id' => $vendor->getId(),
-                'name' => $vendor->getName(),
-                'status' => $vendor->getStatus(),
-            ];
+            $vendorList[] = $vendor->toArray();
         }
 
         return [

@@ -25,19 +25,18 @@ class VendorController extends AbstractController
     {
         $token = $request->headers->get('api-token');
 
-        if (null == $token) {
+        if (null === $token) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Please pass api-token in header',
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = $userManager->getUserFromToken($token);
-
-        if (empty($user)) {
+        if (null === ($user = $userManager->getUserFromToken($token))) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Invalid token',
             ], Response::HTTP_UNAUTHORIZED);
         }
+
         return new JsonResponse([
             'status' => 'success',
             'message' => 'Vendors Fetched Succssfully'

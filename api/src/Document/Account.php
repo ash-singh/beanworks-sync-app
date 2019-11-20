@@ -157,4 +157,17 @@ class Account
     {
         return $this->updatedDate;
     }
+
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getBankAccountType(),
+            'name' => $this->getName(),
+            'bank_account_number' => $this->getBankAccountNumber(),
+            'bank_account_type' => $this->getBankAccountType(),
+            'status' => $this->getStatus(),
+            'updated_on' => $this->getUpdatedDate()
+        ];
+    }
 }

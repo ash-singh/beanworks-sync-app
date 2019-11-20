@@ -26,18 +26,11 @@ class Account
             ;
     }
 
-    public function getAccountList(User $user)
+    public function getAccountList(User $user): array
     {
         $accountList = [];
         foreach ($this->getAccounts($user->getUserId()) as $account) {
-            $accountList[] = [
-                'id' => $account->getId(),
-                'name' => $account->getName(),
-                'bank_account_number' => $account->getBankAccountNumber(),
-                'status' => $account->getStatus(),
-                'account_id' => $account->getAccountId(),
-                'bank_account_type' => $account->getBankAccountType()
-            ];
+            $accountList[] = $account->toArray();
         }
 
         return [
