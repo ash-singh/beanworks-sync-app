@@ -38,4 +38,14 @@ class Account
             'data' => $accountList,
         ];
     }
+
+    public function removeOldRecord(string $accountId): void
+    {
+        $this->accountManager->createQueryBuilder(AccountDocument::class)
+            ->remove()
+            ->field('account_id')->equals($accountId)
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

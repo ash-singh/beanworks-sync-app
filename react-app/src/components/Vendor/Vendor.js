@@ -90,7 +90,6 @@ class Vendor extends Component {
                     </div>
 
                     <DataTable
-                        title="Vendors"
                         columns={columns}
                         data={vendors}
                         pagination

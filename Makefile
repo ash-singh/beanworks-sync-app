@@ -7,6 +7,8 @@ init:
 	$(MAKE) npm-install
 	$(MAKE) initialize-mongodb
 	$(MAKE) create-admin-user
+	$(MAKE) supervisor-service-start
+	$(MAKE) supervisor-workers-up
 
 build:
 	docker-compose build --build-arg DOCKER_UID=$(shell id -u) --compress
@@ -66,3 +68,19 @@ app-down:
 .PHONY: rabbit-status
 rabbit-status:
 	docker-compose exec rabbitmq rabbitmqctl list_queues
+
+
+.PHONY: supervisor-service-start
+supervisor-service-start:
+	docker-compose exec fpm service supervisor start
+
+.PHONY: supervisor-workers-up
+supervisor-workers-up:
+	docker-compose exec fpm supervisorctl start all
+
+PHONY: supervisor
+supervisor:
+	docker-compose exec fpm supervisorctl
+
+
+

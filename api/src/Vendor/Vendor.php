@@ -38,4 +38,14 @@ class Vendor
             'data' => $vendorList,
         ];
     }
+
+    public function removeOldRecord(string $contactId): void
+    {
+        $this->vendorManager->createQueryBuilder(VendorDocument::class)
+            ->remove()
+            ->field('contact')->equals($contactId)
+            ->getQuery()
+            ->execute()
+            ;
+    }
 }

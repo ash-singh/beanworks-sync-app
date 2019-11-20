@@ -5,6 +5,7 @@ namespace App\Xero;
 use App\Document\Sync\Pipeline;
 use App\Document\Vendor as VendorDocument;
 use App\Sync\PipelineLog;
+use App\Vendor\Vendor as VendorService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use XeroPHP\Application\PrivateApplication;
@@ -24,16 +25,21 @@ class Vendor
     /** @var PrivateApplication */
     private $privateApplication;
 
+    /** @var VendorService */
+    private $vendorService;
+
     public function __construct(
         DocumentManager $vendorManager,
         PipelineLog $pipelineLog,
         PrivateApplication $privateApplication,
+        VendorService $vendorService,
         LoggerInterface $logger)
     {
         $this->vendorManager = $vendorManager;
         $this->privateApplication = $privateApplication;
         $this->pipelineLog = $pipelineLog;
         $this->logger = $logger;
+        $this->vendorService = $vendorService;
     }
 
     public function syncRecords(Pipeline $pipeline): void
@@ -53,6 +59,7 @@ class Vendor
 
         foreach ($contacts as $contact) {
             if ($contact->getIsSupplier()) {
+                $this->vendorService->removeOldRecord($contact->getContactId());
                 $vendorDocument = new VendorDocument(
                     $contact->getContactId(),
                     $pipeline->getUser(),

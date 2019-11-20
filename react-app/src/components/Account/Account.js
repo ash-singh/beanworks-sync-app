@@ -96,7 +96,6 @@ class Account extends Component {
                     </div>
 
                     <DataTable
-                        title="Account"
                         columns={columns}
                         data={accounts}
                         pagination

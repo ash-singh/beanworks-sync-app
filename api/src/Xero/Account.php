@@ -2,6 +2,7 @@
 
 namespace App\Xero;
 
+use App\Account\Account as AccountService;
 use App\Document\Account as AccountDocument;
 use App\Document\Sync\Pipeline;
 use App\Sync\PipelineLog;
@@ -25,15 +26,20 @@ class Account
     /** @var PrivateApplication */
     private $privateApplication;
 
+    /** @var AccountService */
+    private $accountService;
+
     public function __construct(
         DocumentManager $accountManager,
         PipelineLog $pipelineLog,
         PrivateApplication $privateApplication,
+        AccountService $accountService,
         LoggerInterface $logger
     ) {
         $this->accountManager = $accountManager;
         $this->pipelineLog = $pipelineLog;
         $this->privateApplication = $privateApplication;
+        $this->accountService = $accountService;
         $this->logger = $logger;
     }
 
@@ -54,6 +60,8 @@ class Account
         $this->logger->info(\sprintf('Fetched %s Accounts from XERO', count($accounts)));
 
         foreach ($accounts as $account) {
+            $this->accountService->removeOldRecord($account->getAccountID());
+
             $accountDocument = new AccountDocument(
                 $account->getAccountID(),
                 $pipeline->getUser(),

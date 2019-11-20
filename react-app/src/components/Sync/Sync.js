@@ -94,7 +94,7 @@ class Sync extends Component {
                 <div className="medium-12 columns">
                     <a href="/home" className="button success">Home</a>
                     <a href="/account" className="button success">Account</a>
-                    <a href="/sync" className="button ">Database Management</a>
+                    <a href="/vendor" className="button success">Vendor</a>
                     <h2>Sync Pipeline</h2>
                     <div> Error Loading</div>
                     <a href="/sync" className="button success">Refresh</a>
@@ -108,7 +108,7 @@ class Sync extends Component {
                     <div className="medium-12 columns">
                         <a href="/home" className="button success">Home</a>
                         <a href="/account" className="button success">Account</a>
-                        <a href="/sync" className="button ">Database Management</a>
+                        <a href="/vendor" className="button success">Vendor</a>
                         <div className="medium-12 columns">
                             <h2>Sync data from Xero Organization</h2>
                             <a href="/sync" className="button success">Refresh</a>
