@@ -61,8 +61,10 @@ class Vendor
             return;
         }
 
+        $total = 0;
         foreach ($contacts as $contact) {
             if ($contact->getIsSupplier()) {
+                ++$total;
                 $this->vendorService->removeOldRecord($contact->getContactId());
                 $vendorDocument = new VendorDocument(
                     $contact->getContactId(),
@@ -82,8 +84,6 @@ class Vendor
                 }
             }
         }
-
-        $total = count($contacts);
 
         $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR, $total);
 

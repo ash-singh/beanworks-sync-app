@@ -160,7 +160,8 @@ class Account
     public function toArray(): array
     {
         return [
-            'id' => $this->getBankAccountType(),
+            'id' => $this->getId(),
+            'account_id' => $this->getAccountId(),
             'name' => $this->getName(),
             'bank_account_number' => $this->getBankAccountNumber(),
             'bank_account_type' => $this->getBankAccountType(),

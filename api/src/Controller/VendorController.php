@@ -20,7 +20,7 @@ class VendorController extends AbstractController
     /**
      * @Route(path="/vendors", name="vendors")
      */
-    public function getContactList(Vendor $vendor, Request $request, User $userManager)
+    public function getContactList(Vendor $vendor, Request $request, User $userManager):JsonResponse
     {
         $token = $request->headers->get('api-token');
 
