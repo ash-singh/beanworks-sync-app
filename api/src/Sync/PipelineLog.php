@@ -105,7 +105,19 @@ class PipelineLog
         $this->write($pipeline, self::PIPELINE_ITEM_ERP_SYNC, 'Pipeline END.');
     }
 
-    public function getLogs(string $pipelineMongoId): array
+    public function getPipelineLogs(string $pipelineMongoId): array
+    {
+        $logs = [];
+        foreach ($this->getLogs($pipelineMongoId) as $log) {
+            $log['created_on'] = $log['created_on']->toDateTime();
+            $logs[] = $log;
+        }
+
+        //var_dump($logs); die("fdf");
+        return $logs;
+    }
+
+    private function getLogs(string $pipelineMongoId): array
     {
         return   $this->documentManager->createQueryBuilder(PipelineLogDocument::class)
             ->field('pipeline_id')->equals($pipelineMongoId)

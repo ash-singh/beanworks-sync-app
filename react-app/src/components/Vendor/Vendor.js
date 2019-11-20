@@ -93,6 +93,8 @@ class Vendor extends Component {
                         columns={columns}
                         data={vendors}
                         pagination
+                        defaultSortAsc={true}
+                        defaultSortField={'name'}
                     />
                 </div>
             );
