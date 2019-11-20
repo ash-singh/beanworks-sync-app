@@ -5,9 +5,20 @@ init:
 	docker-compose up -d
 	$(MAKE) composer-install
 	$(MAKE) npm-install
+	$(MAKE) initialize-mongodb
+	$(MAKE) create-admin-user
 
 build:
 	docker-compose build --build-arg DOCKER_UID=$(shell id -u) --compress
+
+.PHONY: initialize-mongodb
+initialize-mongodb:
+	docker-compose exec fpm ./bin/console doctrine:mongodb:schema:create
+
+.PHONY: create-admin-user
+create-admin-user:
+	docker-compose exec fpm ./bin/console app:initialize:database
+
 
 .PHONY: test-api
 test-api:
