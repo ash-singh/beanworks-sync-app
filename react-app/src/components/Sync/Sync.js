@@ -3,6 +3,9 @@ import DataTable from 'react-data-table-component';
 import './Sync.css';
 import {CreatePipeline} from "../../services/CreatePipeline";
 import {FetchPipelines} from "../../services/FetchPipelines";
+import {FetchPipelineLogs} from "../../services/FetchPipelineLogs";
+
+import PipelineLogs from "../PipelineLogs/PipelineLogs";
 
 const columns = [
     {
@@ -66,6 +69,7 @@ class Sync extends Component {
                         record_count: result.count,
                         pipelines: result.data
                     });
+                    console.log("im here");
                 },
                 (error) => {
                     this.setState({
@@ -81,7 +85,9 @@ class Sync extends Component {
             let responseJson = result;
             if (responseJson.status === "OK" && responseJson.message) {
                 this.setState({success_message: responseJson.message});
-                this.forceUpdate();
+
+                FetchPipelines()
+
             } else {
                 this.setState({failure_message: responseJson.message});
             }
@@ -127,6 +133,8 @@ class Sync extends Component {
                         columns={columns}
                         data={pipelines}
                         pagination
+                        expandableRows
+                        expandableRowsComponent={<PipelineLogs />}
                     />
                 </div>
             );
