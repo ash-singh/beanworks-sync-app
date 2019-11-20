@@ -53,7 +53,7 @@ class Sync extends Component {
             error: null,
             isLoaded: false,
             pipelines: [],
-            record_count: 0
+            record_count: 0,
         };
         this.createPipeline = this.createPipeline.bind(this);
     }
@@ -84,9 +84,7 @@ class Sync extends Component {
             let responseJson = result;
             if (responseJson.status === "OK" && responseJson.message) {
                 this.setState({success_message: responseJson.message});
-
-                FetchPipelines()
-
+                this.setState({pipelines: this.state.pipelines.concat([responseJson.data])});
             } else {
                 this.setState({failure_message: responseJson.message});
             }
@@ -102,7 +100,6 @@ class Sync extends Component {
                     <a href="/vendor" className="button success">Vendor</a>
                     <h2>Sync Pipeline</h2>
                     <div> Error Loading</div>
-                    <a href="/sync" className="button success">Refresh</a>
                 </div>
             );
         } else if (!isLoaded) {
@@ -116,16 +113,12 @@ class Sync extends Component {
                         <a href="/vendor" className="button success">Vendor</a>
                         <div className="medium-12 columns">
                             <h2>Sync data from Xero Organization</h2>
-                            <a href="/sync" className="button success">Refresh</a>
-
                             <input type="submit" className="button" value="Sync Data Now" onClick={this.createPipeline}/>
 
                             <div className="error">{ this.state.failure_message } </div>
                             <div className="success">{ this.state.success_message } </div>
                         </div>
-
                     </div>
-
 
                     <DataTable
                         title="Data Sync Pipelines"
