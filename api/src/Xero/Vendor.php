@@ -49,7 +49,11 @@ class Vendor
         try {
             $contacts = $this->privateApplication->load(Contact::class)->execute();
 
-            $this->pipelineLog->itemFetchFromErpSuccess($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
+            $this->pipelineLog->itemFetchFromErpSuccess(
+                $pipeline,
+                PipelineLog::PIPELINE_ITEM_TYPE_VENDOR,
+                $contacts->count()
+            );
         } catch (\Exception $exception) {
             $this->logger->error('Failed to fetch contacts from XERO', [$exception->getMessage()]);
             $this->pipelineLog->itemFetchFromErpFailed($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
@@ -81,7 +85,7 @@ class Vendor
 
         $total = count($contacts);
 
-        $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
+        $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR, $total);
 
         $this->pipelineLog->updateRecordStats($pipeline, $total, $failedCount);
     }

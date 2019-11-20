@@ -9,14 +9,14 @@ const columns = [
         sortable: true,
     },
     {
-        name: 'Status',
-        selector: 'status',
+        name: 'Detail',
+        selector: 'detail',
         sortable: true,
     },
 
     {
         name: 'Timestamp',
-        selector: 'timestamp.date',
+        selector: 'created_on.$date.$numberLong',
         sortable: true,
     },
 ];

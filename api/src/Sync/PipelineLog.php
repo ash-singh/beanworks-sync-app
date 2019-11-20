@@ -5,7 +5,6 @@ namespace App\Sync;
 use App\Document\Sync\Pipeline as PipelineDocument;
 use App\Document\Sync\PipelineLog as PipelineLogDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\ObjectID;
 
 class PipelineLog
 {
@@ -52,9 +51,9 @@ class PipelineLog
         $this->documentManager->flush();
     }
 
-    public function itemFetchFromErpSuccess(PipelineDocument $pipeline, string $itemType): void
+    public function itemFetchFromErpSuccess(PipelineDocument $pipeline, string $itemType, int $recordCount = 0): void
     {
-        $this->write($pipeline, $itemType, 'Items fetched from ERP successfully.');
+        $this->write($pipeline, $itemType, $recordCount.' Items fetched from ERP successfully.');
     }
 
     public function itemFetchFromErpFailed(PipelineDocument $pipeline, string $itemType): void
@@ -62,9 +61,9 @@ class PipelineLog
         $this->write($pipeline, $itemType, 'Failed to fetched from ERP.');
     }
 
-    public function synchedRecord(PipelineDocument $pipeline, string $itemType): void
+    public function synchedRecord(PipelineDocument $pipeline, string $itemType, int $recordCount = 0): void
     {
-        $this->write($pipeline, $itemType, 'Record sync finished for the item.');
+        $this->write($pipeline, $itemType, $recordCount.' Records sync finished for the item.');
     }
 
     public function updateRecordStats(PipelineDocument $pipeline, int $total, int $failed): void
@@ -108,8 +107,9 @@ class PipelineLog
 
     public function getLogs(string $pipelineMongoId): array
     {
-        return $this->documentManager->createQueryBuilder(PipelineLogDocument::class)
-            ->field('pipeline')->equals(new ObjectId($pipelineMongoId))
+        return   $this->documentManager->createQueryBuilder(PipelineLogDocument::class)
+            ->field('pipeline_id')->equals($pipelineMongoId)
+            ->hydrate(false)
             ->getQuery()
             ->execute()->toArray()
             ;

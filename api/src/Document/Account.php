@@ -6,6 +6,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * @MongoDB\Document(db="beanworks", collection="accounts")
+ *
+ * @MongoDB\Index(keys={"account_id": "asc"})
  */
 class Account
 {

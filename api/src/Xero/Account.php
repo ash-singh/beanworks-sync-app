@@ -49,7 +49,11 @@ class Account
 
         try {
             $accounts = $this->privateApplication->load(XeroAccount::class)->execute();
-            $this->pipelineLog->itemFetchFromErpSuccess($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT);
+            $this->pipelineLog->itemFetchFromErpSuccess(
+                $pipeline,
+                PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT,
+                $accounts->count()
+            );
         } catch (\Exception $exception) {
             $this->logger->error('Failed to fetch accounts from XERO', $exception->getMessage());
             $this->pipelineLog->itemFetchFromErpFailed($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT);
@@ -84,7 +88,7 @@ class Account
 
         $total = count($accounts);
 
-        $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT);
+        $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT, $total);
 
         $this->pipelineLog->updateRecordStats($pipeline, $total, $failedCount);
     }

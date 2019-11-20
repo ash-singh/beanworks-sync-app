@@ -17,7 +17,7 @@ class Vendor
         $this->vendorManager = $vendorManager;
     }
 
-    public function getVendors(string $userMongoID)
+    public function getVendors(string $userMongoID): array
     {
         return $this->vendorManager->createQueryBuilder(VendorDocument::class)
             ->field('user')->equals(new ObjectId($userMongoID))
@@ -26,7 +26,7 @@ class Vendor
             ;
     }
 
-    public function getVendorList(User $user)
+    public function getVendorList(User $user): array
     {
         $vendorList = [];
         foreach ($this->getVendors($user->getUserId()) as $vendor) {
@@ -43,7 +43,7 @@ class Vendor
     {
         $this->vendorManager->createQueryBuilder(VendorDocument::class)
             ->remove()
-            ->field('contact')->equals($contactId)
+            ->field('contact_id')->equals($contactId)
             ->getQuery()
             ->execute()
             ;
