@@ -23,18 +23,14 @@ class Pipeline
     /** @var PipelineLog */
     private $pipelineLog;
 
-    /** @var Account  */
+    /** @var Account */
     private $account;
 
-    /** @var Vendor  */
+    /** @var Vendor */
     private $vendor;
 
     /**
      * Pipeline constructor.
-     * @param DocumentManager $pipelineManager
-     * @param PipelineLog $pipelineLog
-     * @param Account $account
-     * @param Vendor $vendor
      */
     public function __construct(
         DocumentManager $pipelineManager,
@@ -60,7 +56,9 @@ class Pipeline
     {
         $pipelineList = [];
         foreach ($this->getPipelines($user->getUserId()) as $pipeline) {
-            $pipelineList[] = $pipeline->toArray();
+            $pipelineArray = $pipeline->toArray();
+            $pipelineArray['logs'] = $this->pipelineLog->getLogs($pipeline->getPipelineId());
+            $pipelineList[] = $pipelineArray;
         }
 
         return $pipelineList;

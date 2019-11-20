@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Message\Sync\Pipeline as PipelineMessage;
 use App\MessageHandler\Sync\PipelineHandler;
 use App\Sync\Pipeline;
+use App\Sync\PipelineLog;
 use App\User\User;
 use App\Xero\Vendor;
 use Doctrine\ODM\MongoDB\MongoDBException;
@@ -49,8 +50,8 @@ class SyncController extends AbstractController
                 'operation' => $pipeline->getOperation(),
                 'pipeline_id' => $pipeline->getPipelineId(),
             ]);
-            //$this->dispatchMessage(new PipelineMessage($pipeline));
-            $pipelinehandler(new PipelineMessage($pipeline));
+            $this->dispatchMessage(new PipelineMessage($pipeline));
+            //$pipelinehandler(new PipelineMessage($pipeline));
         } catch (MongoDBException $mongoDBException) {
             return new JsonResponse(['status' => 'KO', 'message' => 'Sync is initialized failed'], Response::HTTP_BAD_REQUEST);
         }
@@ -84,5 +85,33 @@ class SyncController extends AbstractController
         }
 
         return new JsonResponse(['status' => 'OK', 'message' => 'Pipelines fetched successfully', 'count' => count($pipelines), 'data' => $pipelines], Response::HTTP_OK);
+    }
+
+    /**
+     * @Route(path="/logs/{pipelineId}", name="get_logs", methods={"GET"})
+     */
+    public function getPipelineLogs(PipelineLog $pipelineLog, Request $request, User $userManager, string $pipelineId): JsonResponse
+    {
+        $token = $request->headers->get('api-token');
+
+        if (null === $token) {
+            return new JsonResponse([
+                'status' => 'KO', 'message' => 'Please pass api-token in header',
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (null === ($user = $userManager->getUserFromToken($token))) {
+            return new JsonResponse([
+                'status' => 'KO', 'message' => 'Invalid token',
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            $pipelineLogs = $pipelineLog->getLogs($pipelineId);
+        } catch (MongoDBException $mongoDBException) {
+            return new JsonResponse(['status' => 'KO', 'message' => 'Failed to fetch pipline logs'], Response::HTTP_BAD_REQUEST);
+        }
+
+        return new JsonResponse(['status' => 'OK', 'message' => 'Pipeline logs fetched successfully', 'count' => count($pipelineLogs), 'data' => $pipelineLogs], Response::HTTP_OK);
     }
 }

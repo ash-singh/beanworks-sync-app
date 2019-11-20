@@ -3,8 +3,9 @@
 namespace App\Sync;
 
 use App\Document\Sync\Pipeline as PipelineDocument;
-use App\Document\Sync\PipelineLog as PipelineLOgDocument;
+use App\Document\Sync\PipelineLog as PipelineLogDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use MongoDB\BSON\ObjectID;
 
 class PipelineLog
 {
@@ -17,8 +18,6 @@ class PipelineLog
 
     /**
      * PipelineLog constructor.
-     *
-     * @param DocumentManager $pipelineManager
      */
     public function __construct(DocumentManager $documentManager)
     {
@@ -33,13 +32,14 @@ class PipelineLog
         $this->documentManager->persist($pipeline->getUser());
         $this->documentManager->persist($pipeline);
         $this->documentManager->flush();
+        $this->documentManager->clear();
 
         $this->writePipelineLog($pipeline);
     }
 
     public function writePipelineLog(PipelineDocument $pipeline): void
     {
-        $pipelineLog = new PipelineLOgDocument(
+        $pipelineLog = new PipelineLogDocument(
             $pipeline,
             self::PIPELINE_ITEM_ERP_SYNC,
             'Started to sync items from ERP'
@@ -81,7 +81,7 @@ class PipelineLog
 
     private function write(PipelineDocument $pipeline, string $itemType, string $detail): void
     {
-        $pipelineLog = new PipelineLOgDocument(
+        $pipelineLog = new PipelineLogDocument(
             $pipeline,
             $itemType,
             $detail
@@ -104,5 +104,14 @@ class PipelineLog
         $this->documentManager->flush();
 
         $this->write($pipeline, self::PIPELINE_ITEM_ERP_SYNC, 'Pipeline END.');
+    }
+
+    public function getLogs(string $pipelineMongoId): array
+    {
+        return $this->documentManager->createQueryBuilder(PipelineLogDocument::class)
+            ->field('pipeline')->equals(new ObjectId($pipelineMongoId))
+            ->getQuery()
+            ->execute()->toArray()
+            ;
     }
 }
