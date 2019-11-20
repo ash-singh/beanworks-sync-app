@@ -19,6 +19,14 @@ http://localhost:8888/
 ## Beanworks react based App
 http://localhost:3000/
 
+## Login with Sample User
+```bash
+email: admin@beanworks.com
+```
+```bash
+password: admin
+```
+
 #### PHP Unit Test
 ```bash
 make test-api
