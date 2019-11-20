@@ -35,7 +35,7 @@ class UserControllerTest extends WebTestCase
 
         $response = json_decode($client->getResponse()->getContent(), true);
         $this->assertEquals(Response::HTTP_OK, $client->getResponse()->getStatusCode());
-        $this->assertEquals('OK',$response['status']);
+        $this->assertEquals('OK', $response['status']);
         $this->assertNotEmpty($response['data']['token']);
     }
 

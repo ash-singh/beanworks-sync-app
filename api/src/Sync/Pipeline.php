@@ -56,7 +56,7 @@ class Pipeline
     {
         $pipelineList = [];
         foreach ($this->getPipelines($user->getUserId()) as $pipeline) {
-            $pipelineList[] = $pipeline->toArray();;
+            $pipelineList[] = $pipeline->toArray();
         }
 
         return $pipelineList;
