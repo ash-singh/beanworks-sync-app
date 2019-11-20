@@ -13,6 +13,16 @@ Install Project
 make init
 ```
 
+## Symfony based API
+http://localhost:8888/
+
+## Beanworks react based App
+http://localhost:3000/
+
+#### PHP Unit Test
+```bash
+make test-api
+```
 
 #### PHP Code Standard Fixer
 ```bash
@@ -26,17 +36,11 @@ make static-analysis
 We are using `PHPStan` [https://github.com/phpstan/phpstan](https://github.com/phpstan/phpstan) for static code analysis.
 * Please make sure you get `[OK] No errors` before pushing new code.
                                                                         
-
-#### Pipeline messenger with async transport using RabbitMQ 
-
-
+                                                                      
+#### React Unit Test
 ```bash
-docker-compose build
-docker-compose up -d
-
-docker-compose exec fpm composer install
+make test-react
 ```
-
 
 Checking messages in RabbitMQ
 
@@ -74,8 +78,6 @@ supervisorctl status
 ```
 
 Start
-
-
 ```bash
 supervisorctl start messenger-consume-pipeline-processing
 ```
