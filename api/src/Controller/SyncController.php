@@ -107,7 +107,7 @@ class SyncController extends AbstractController
         }
 
         try {
-            $pipelineLogs = $pipelineLog->getLogs($pipelineId);
+            $pipelineLogs = $pipelineLog->getPipelineLogs($pipelineId);
         } catch (MongoDBException $mongoDBException) {
             return new JsonResponse(['status' => 'KO', 'message' => 'Failed to fetch pipline logs'], Response::HTTP_BAD_REQUEST);
         }
