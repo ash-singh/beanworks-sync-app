@@ -126,6 +126,7 @@ class Sync extends Component {
                         title="Data Sync Pipelines"
                         columns={columns}
                         data={pipelines}
+                        pagination
                     />
                 </div>
             );

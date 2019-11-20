@@ -93,6 +93,7 @@ class Vendor extends Component {
                         title="Vendors"
                         columns={columns}
                         data={vendors}
+                        pagination
                     />
                 </div>
             );

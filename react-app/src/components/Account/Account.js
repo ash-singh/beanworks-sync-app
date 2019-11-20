@@ -99,6 +99,7 @@ class Account extends Component {
                         title="Account"
                         columns={columns}
                         data={accounts}
+                        pagination
                     />
 
                 </div>
