@@ -53,7 +53,7 @@ class PipelineLog
         $this->pipeline = $pipeline;
         $this->item = $item;
         $this->detail = $detail;
-        $this->timestamp = new \DateTime();;
+        $this->timestamp = new \DateTime();
     }
 
     /**
@@ -61,30 +61,19 @@ class PipelineLog
      */
     public function getPipeline(): Pipeline
     {
-
         return $this->pipeline;
     }
 
-    /**
-     * @return string
-     */
     public function getItem(): string
     {
         return $this->item;
     }
 
-
-    /**
-     * @return \DateTime
-     */
     public function getTimestamp(): \DateTime
     {
         return $this->timestamp;
     }
 
-    /**
-     * @return string
-     */
     public function getDetail(): string
     {
         return $this->detail;

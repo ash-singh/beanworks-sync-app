@@ -47,6 +47,7 @@ class Account
         } catch (\Exception $exception) {
             $this->logger->error('Failed to fetch accounts from XERO', $exception->getMessage());
             $this->pipelineLog->itemFetchFromErpFailed($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_ACCOUNT);
+
             return;
         }
 
@@ -66,12 +67,11 @@ class Account
             );
             $this->accountManager->persist($accountDocument);
             $this->accountManager->persist($pipeline->getUser());
-            try{
+            try {
                 $this->accountManager->flush();
             } catch (MongoDBException $exception) {
-                $this->logger->error('Failed to save account for pipeline ' . $pipeline->getPipelineId());
+                $this->logger->error('Failed to save account for pipeline '.$pipeline->getPipelineId());
             }
-
         }
 
         $total = count($accounts);

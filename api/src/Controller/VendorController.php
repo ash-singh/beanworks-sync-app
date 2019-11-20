@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\Vendor\Vendor;
 use App\User\User;
+use App\Vendor\Vendor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 /**
  * VendorController.
@@ -39,7 +38,7 @@ class VendorController extends AbstractController
 
         return new JsonResponse([
             'status' => 'success',
-            'message' => 'Vendors Fetched Succssfully'
+            'message' => 'Vendors Fetched Succssfully',
         ] + $vendor->getVendorList($user), Response::HTTP_OK);
     }
 }

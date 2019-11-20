@@ -2,8 +2,8 @@
 
 namespace App\Vendor;
 
-use App\Document\Vendor as VendorDocument;
 use App\Document\User;
+use App\Document\Vendor as VendorDocument;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use MongoDB\BSON\ObjectId;
 
@@ -35,7 +35,7 @@ class Vendor
 
         return [
             'count' => count($vendorList),
-            'data' => $vendorList
+            'data' => $vendorList,
         ];
     }
 }

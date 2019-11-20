@@ -4,9 +4,7 @@ namespace App\Sync;
 
 use App\Document\Sync\Pipeline as PipelineDocument;
 use App\Document\Sync\PipelineLog as PipelineLOgDocument;
-
 use Doctrine\ODM\MongoDB\DocumentManager;
-use MongoDB\BSON\ObjectId;
 
 class PipelineLog
 {
@@ -17,10 +15,9 @@ class PipelineLog
     /** @var DocumentManager */
     private $documentManager;
 
-
-
     /**
      * PipelineLog constructor.
+     *
      * @param DocumentManager $pipelineManager
      */
     public function __construct(DocumentManager $documentManager)
@@ -28,7 +25,7 @@ class PipelineLog
         $this->documentManager = $documentManager;
     }
 
-    public function markPipelineInProgress(PipelineDocument $pipeline):void
+    public function markPipelineInProgress(PipelineDocument $pipeline): void
     {
         $pipeline->setStatus(Pipeline::STATUS_IN_PROGRESS);
         $pipeline->setUpdatedDate(new \DateTime());
@@ -52,9 +49,7 @@ class PipelineLog
         $this->documentManager->persist($pipeline);
         $this->documentManager->persist($pipelineLog);
 
-
         $this->documentManager->flush();
-
     }
 
     public function itemFetchFromErpSuccess(PipelineDocument $pipeline, string $itemType): void
@@ -111,4 +106,3 @@ class PipelineLog
         $this->write($pipeline, self::PIPELINE_ITEM_ERP_SYNC, 'Pipeline END.');
     }
 }
-

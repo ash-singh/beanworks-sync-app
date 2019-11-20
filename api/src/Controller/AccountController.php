@@ -30,7 +30,6 @@ class AccountController extends AbstractController
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        ;
         if (null === ($user = $userManager->getUserFromToken($token))) {
             return new JsonResponse([
                 'status' => 'KO', 'message' => 'Invalid token',

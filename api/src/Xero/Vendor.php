@@ -2,13 +2,13 @@
 
 namespace App\Xero;
 
+use App\Document\Sync\Pipeline;
 use App\Document\Vendor as VendorDocument;
 use App\Sync\PipelineLog;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Psr\Log\LoggerInterface;
 use XeroPHP\Application\PrivateApplication;
 use XeroPHP\Models\Accounting\Contact;
-use \App\Document\Sync\Pipeline;
 
 class Vendor
 {
@@ -44,10 +44,10 @@ class Vendor
             $contacts = $this->privateApplication->load(Contact::class)->execute();
 
             $this->pipelineLog->itemFetchFromErpSuccess($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
-
         } catch (\Exception $exception) {
             $this->logger->error('Failed to fetch contacts from XERO', [$exception->getMessage()]);
             $this->pipelineLog->itemFetchFromErpFailed($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
+
             return;
         }
 
@@ -63,14 +63,12 @@ class Vendor
                 );
                 $this->vendorManager->persist($vendorDocument);
                 $this->vendorManager->persist($pipeline->getUser());
-                try{
+                try {
                     $this->vendorManager->flush();
-
                 } catch (\Exception $exception) {
-                    $this->logger->error('Failed to save vendor with email: ' . $contact->getEmailAddress());
+                    $this->logger->error('Failed to save vendor with email: '.$contact->getEmailAddress());
                     ++$failedCount;
                 }
-
             }
         }
 
@@ -79,8 +77,5 @@ class Vendor
         $this->pipelineLog->synchedRecord($pipeline, PipelineLog::PIPELINE_ITEM_TYPE_VENDOR);
 
         $this->pipelineLog->updateRecordStats($pipeline, $total, $failedCount);
-
-
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Message\Sync;
 
-use \App\Document\Sync\Pipeline as PipelineDocument;
+use App\Document\Sync\Pipeline as PipelineDocument;
 
 class Pipeline
 {
@@ -16,9 +16,6 @@ class Pipeline
         $this->pipelineDocument = $pipelineDocument;
     }
 
-    /**
-     * @return PipelineDocument
-     */
     public function getPipeline(): PipelineDocument
     {
         return $this->pipelineDocument;

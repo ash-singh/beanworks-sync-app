@@ -2,7 +2,6 @@
 
 namespace App\Document\Sync;
 
-
 use App\Document\User;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
@@ -34,21 +33,21 @@ class Pipeline
     protected $operation;
 
     /**
-     * @var integer
+     * @var int
      *
      * @MongoDB\Field(type="int", name="total_records")
      */
     protected $totalRecords;
 
     /**
-     * @var integer
+     * @var int
      *
      * @MongoDB\Field(type="int", name="failed_records")
      */
     protected $failedRecords;
 
     /**
-     * @var integer
+     * @var int
      *
      * @MongoDB\Field(type="int", name="success_records")
      */
@@ -77,9 +76,6 @@ class Pipeline
 
     /**
      * Pipeline constructor.
-     * @param User $user
-     * @param string $operation
-     * @param string $status
      */
     public function __construct(
         User $user,
@@ -95,42 +91,26 @@ class Pipeline
         $this->creationDate = new \DateTime();
     }
 
-    /**
-     * @return string
-     */
     public function getPipelineId(): string
     {
-
         return $this->id;
     }
 
-    /**
-     * @return User
-     */
     public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @return string
-     */
     public function getOperation(): string
     {
         return $this->operation;
     }
 
-    /**
-     * @return string
-     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreationDate(): \DateTime
     {
         return $this->creationDate;
@@ -168,49 +148,31 @@ class Pipeline
         return $this->updatedDate;
     }
 
-    /**
-     * @param int $failedRecords
-     */
     public function setFailedRecords(int $failedRecords): void
     {
         $this->failedRecords = $failedRecords;
     }
 
-    /**
-     * @param string $operation
-     */
     public function setOperation(string $operation): void
     {
         $this->operation = $operation;
     }
 
-    /**
-     * @param string $status
-     */
     public function setStatus(string $status): void
     {
         $this->status = $status;
     }
 
-    /**
-     * @param int $successRecords
-     */
     public function setSuccessRecords(int $successRecords): void
     {
         $this->successRecords = $successRecords;
     }
 
-    /**
-     * @param int $totalRecords
-     */
     public function setTotalRecords(int $totalRecords): void
     {
         $this->totalRecords = $totalRecords;
     }
 
-    /**
-     * @param \DateTime $updatedDate
-     */
     public function setUpdatedDate(\DateTime $updatedDate): void
     {
         $this->updatedDate = $updatedDate;
@@ -226,7 +188,7 @@ class Pipeline
             'failed_count' => $this->getFailedRecords(),
             'success_count' => $this->getSuccessRecords(),
             'created_on' => $this->getCreationDate(),
-            'updated_on' => $this->getUpdatedDate()
+            'updated_on' => $this->getUpdatedDate(),
         ];
     }
 }

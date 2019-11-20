@@ -108,9 +108,6 @@ class Vendor
         return $this->contactId;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getUpdatedDate(): \DateTime
     {
         return $this->updatedDate;
@@ -126,9 +123,6 @@ class Vendor
         $this->contactId = $contactId;
     }
 
-    /**
-     * @param \DateTime $updatedDate
-     */
     public function setUpdatedDate(\DateTime $updatedDate): void
     {
         $this->updatedDate = $updatedDate;
@@ -141,7 +135,7 @@ class Vendor
             'name' => $this->getName(),
             'email' => $this->getEmail(),
             'status' => $this->getStatus(),
-            'updated_on' => $this->getUpdatedDate()
+            'updated_on' => $this->getUpdatedDate(),
         ];
     }
 }

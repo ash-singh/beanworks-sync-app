@@ -150,14 +150,10 @@ class Account
         return $this->bankAccountType;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getUpdatedDate(): \DateTime
     {
         return $this->updatedDate;
     }
-
 
     public function toArray(): array
     {
@@ -167,7 +163,7 @@ class Account
             'bank_account_number' => $this->getBankAccountNumber(),
             'bank_account_type' => $this->getBankAccountType(),
             'status' => $this->getStatus(),
-            'updated_on' => $this->getUpdatedDate()
+            'updated_on' => $this->getUpdatedDate(),
         ];
     }
 }

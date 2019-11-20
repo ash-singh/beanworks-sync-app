@@ -35,7 +35,7 @@ class Account
 
         return [
             'count' => count($accountList),
-            'data' => $accountList
+            'data' => $accountList,
         ];
     }
 }

@@ -23,18 +23,25 @@ class Pipeline
     /** @var PipelineLog */
     private $pipelineLog;
 
+    /** @var Account  */
+    private $account;
+
+    /** @var Vendor  */
+    private $vendor;
+
     /**
      * Pipeline constructor.
      * @param DocumentManager $pipelineManager
      * @param PipelineLog $pipelineLog
+     * @param Account $account
+     * @param Vendor $vendor
      */
     public function __construct(
         DocumentManager $pipelineManager,
         PipelineLog $pipelineLog,
         Account $account,
         Vendor $vendor
-    )
-    {
+    ) {
         $this->pipelineManager = $pipelineManager;
         $this->pipelineLog = $pipelineLog;
         $this->account = $account;

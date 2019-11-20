@@ -2,19 +2,18 @@
 
 namespace App\Controller;
 
+use App\Message\Sync\Pipeline as PipelineMessage;
 use App\MessageHandler\Sync\PipelineHandler;
 use App\Sync\Pipeline;
 use App\User\User;
-use App\Xero\Account;
 use App\Xero\Vendor;
 use Doctrine\ODM\MongoDB\MongoDBException;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Message\Sync\Pipeline as PipelineMessage;
-use Psr\Log\LoggerInterface;
 
 /**
  * SyncController.
@@ -42,19 +41,17 @@ class SyncController extends AbstractController
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-
-        try{
+        try {
             $pipeline = $pipelineManager->createPipeline($user, Pipeline::OPERATION_XERO_SYNC);
 
             $logger->info('Initialized Pipeline Pushing to Queue', [
                 'user' => $pipeline->getUser()->getUserId(),
                 'operation' => $pipeline->getOperation(),
-                'pipeline_id' => $pipeline->getPipelineId()
+                'pipeline_id' => $pipeline->getPipelineId(),
             ]);
             //$this->dispatchMessage(new PipelineMessage($pipeline));
             $pipelinehandler(new PipelineMessage($pipeline));
-
-        }catch (MongoDBException $mongoDBException) {
+        } catch (MongoDBException $mongoDBException) {
             return new JsonResponse(['status' => 'KO', 'message' => 'Sync is initialized failed'], Response::HTTP_BAD_REQUEST);
         }
 
@@ -80,10 +77,9 @@ class SyncController extends AbstractController
             ], Response::HTTP_UNAUTHORIZED);
         }
 
-        try{
+        try {
             $pipelines = $pipelineManager->getPipelineList($user);
-
-        }catch (MongoDBException $mongoDBException) {
+        } catch (MongoDBException $mongoDBException) {
             return new JsonResponse(['status' => 'KO', 'message' => 'Failed to fetch sync list'], Response::HTTP_BAD_REQUEST);
         }
 

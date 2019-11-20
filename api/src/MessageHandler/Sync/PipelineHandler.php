@@ -7,8 +7,7 @@ use App\Sync\Pipeline;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class PipelineHandler
- * @package App\MessageHandler\Sync
+ * Class PipelineHandler.
  */
 class PipelineHandler
 {
@@ -24,15 +23,12 @@ class PipelineHandler
         $this->logger = $logger;
     }
 
-    /**
-     * @param PipelineMessage $pipeline
-     */
     public function __invoke(PipelineMessage $pipeline)
     {
         $this->logger->info('Received Pipeline for processing', [
             'user' => $pipeline->getPipeline()->getUser()->getUserId(),
             'operation' => $pipeline->getPipeline()->getOperation(),
-            'pipeline_id' => $pipeline->getPipeline()->getPipelineId()
+            'pipeline_id' => $pipeline->getPipeline()->getPipelineId(),
         ]);
 
         $this->pipelineManager->processPipeline($pipeline->getPipeline());
