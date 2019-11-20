@@ -16,7 +16,7 @@ const columns = [
 
     {
         name: 'Timestamp',
-        selector: 'created_on.$date.$numberLong',
+        selector: 'created_on.date',
         sortable: true,
     },
 ];
@@ -70,6 +70,8 @@ class PipelineLogs extends Component {
                     title="Pipeline Logs"
                     columns={columns}
                     data={logs}
+                    defaultSortAsc={false}
+                    defaultSortField={'created_on.date'}
                 />
 
             );

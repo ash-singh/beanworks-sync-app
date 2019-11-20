@@ -99,6 +99,8 @@ class Account extends Component {
                         columns={columns}
                         data={accounts}
                         pagination
+                        defaultSortAsc={true}
+                        defaultSortField={'name'}
                     />
 
                 </div>

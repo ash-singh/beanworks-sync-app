@@ -3,7 +3,6 @@ import DataTable from 'react-data-table-component';
 import './Sync.css';
 import {CreatePipeline} from "../../services/CreatePipeline";
 import {FetchPipelines} from "../../services/FetchPipelines";
-import {FetchPipelineLogs} from "../../services/FetchPipelineLogs";
 
 import PipelineLogs from "../PipelineLogs/PipelineLogs";
 
