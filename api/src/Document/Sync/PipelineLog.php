@@ -6,6 +6,8 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
  * @MongoDB\Document(db="beanworks", collection="pipeline_logs")
+ *
+ * @MongoDB\Index(keys={"pipeline_id": "asc"})
  */
 class PipelineLog
 {
@@ -27,6 +29,13 @@ class PipelineLog
     /**
      * @var string
      *
+     * @MongoDB\Field(type="string", name="pipeline_id")
+     */
+    protected $pipelineId;
+
+    /**
+     * @var string
+     *
      * @MongoDB\Field(type="string")
      */
     protected $item;
@@ -34,16 +43,16 @@ class PipelineLog
     /**
      * @var string
      *
-     * @MongoDB\Field(type="string", name="total_records")
+     * @MongoDB\Field(type="string", name="detail")
      */
     protected $detail;
 
     /**
      * @var \DateTime
      *
-     * @MongoDB\Field(type="date", name="timestamp")
+     * @MongoDB\Field(type="date", name="created_on")
      */
-    protected $timestamp;
+    protected $creationDate;
 
     public function __construct(
         Pipeline $pipeline,
@@ -53,7 +62,8 @@ class PipelineLog
         $this->pipeline = $pipeline;
         $this->item = $item;
         $this->detail = $detail;
-        $this->timestamp = new \DateTime();
+        $this->creationDate = new \DateTime();
+        $this->pipelineId = $pipeline->getPipelineId();
     }
 
     public function getPipeline(): Pipeline
@@ -68,12 +78,17 @@ class PipelineLog
 
     public function getTimestamp(): \DateTime
     {
-        return $this->timestamp;
+        return $this->creationDate;
     }
 
     public function getDetail(): string
     {
         return $this->detail;
+    }
+
+    public function getPipelineId(): string
+    {
+        return $this->pipelineId;
     }
 
     public function toArray(): array
