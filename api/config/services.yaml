@@ -16,24 +16,25 @@ parameters:
     app.xero.config:
         oauth :
             callback : http://localhost:8888
-            consumer_key : 'XIZYAZLAHNZOTEYR0BT7SPIG7DULAN'
-            consumer_secret : 'IR60SIH68DWJHJKXLMTJ8BM6DNRN0N'
+            consumer_key : 'Z15YQPUKN7TX826ZXDA4ANU19NTBV3'
+            consumer_secret : 'AVOATCHTIYUKGDHDG8N0KBU5M7PPR3'
             rsa_private_key : |
                 -----BEGIN RSA PRIVATE KEY-----
-                MIICXQIBAAKBgQDqCbeNUBYj6IatNHWXG7GhyJodd15U9oWtpnstW210KkK5qUE1
-                90elHb/GbQHracRxTys3b3mGUQo6tegkY37CwCWAc87Zse1AFjTjlxzab6ETRIEw
-                kd7X//1fKY31kiq4oEXAMJ0br2picnRnj+dZoVO62eF+TfKtLqweRu6gHQIDAQAB
-                AoGBAOODerqXZk6WF4Z9furc8zvRZXDLwBpcZOvA8fHP9YF+K8uNLGWn9DAh0XK2
-                Oa1+7ocwbVTAu6TFV2pnuDrXtjsEcP9OkQZ2D74qxqy4QCLgO2I+wx6tquF/bfyn
-                uAHtX+l8wobVOyrZ/jBY9cS8s4QxLCwGZaR+tskBzSiUf7cBAkEA/6WhImYgtENc
-                smvMJbYgX5zy8lW1zCgjT2HKsKmcFooFtsC+DGS+WFlKs/kIbugCooTy66M267jR
-                CnfyG+4C4QJBAOpccuaF/sI3qm8CTgnll9md2Eo9jkP3sQ5g8il1GEcmjMjkRAA5
-                njKFYNjCsizh29GFZUoVswvOKDIZHMWGgL0CQQCW4hKwUsaKnhdf1u+ucke5JtDc
-                5mleDXKJr5YJnpFZXCzzJ98DQZJ2Yn0Mq7amfpjPgtg86x/HEFWQcCqdAWUBAkA2
-                8vIlxqkS1IZrfLjbbS+LYI0D6ybeHMcwvd5JhiDpHcrIl2yyONA0vD0W1Z99En+9
-                wm8bTbcrP20BQg4S6hRpAkB9XKBjYEVec6j9u1olp8R9y0GPrzQquYBLGbnfP5P8
-                l12b0Abpl+VmuWVC3fxNj1upxC6otBwaxbteddSkrRFM
+                MIICXQIBAAKBgQCwTR9A6gH3q5AkAYIWHHP95CwUQGQbSQXt2qw5Z/holU4y//Bc
+                I1AY7PAnLRpp9buEAYg4O7Y88SbyqRRlFOaMXtK7CZZTdJ8wtrG9bLhZx5T/P481
+                dTE3770NuCgPUv4CYVzSDWl/gQWvvbIRqOKpF/qc6sJr+yBC/zyW2bB4LwIDAQAB
+                AoGAA2RofopCIW7Wpiq1QxGnFbKHOpiGlJPSHmJ/v9cFS5Xb3FVaXZt8Vg5xDH/s
+                qy9EPWT+Jv7XIdMOCctBDjTZvr+CuybOijdCHvox4+H4TAzP8OVztWH6AuEDyuja
+                BnyL8yq1pVEkB1kja4D7WnZOQ1BzP+7SsPcN12dqpZIq+tkCQQDZ7E/oMfA7IjA0
+                /wGUjYyfemZjocAaVHgrdgNo5PGKOrbSNg82cEPD39YMZhtXMXPU6QvvDLLch7sf
+                60ky4RvtAkEAzxsRSg62GFQl///c9skl2fINtw8xNNGc19VeOfV/HVS2AeRezCTI
+                MLWoE2GYMKgmTBb4TWXHYdUjiALxUW65CwJBANCc0I21qIPjIYTKDKg5rMFJ+dQs
+                lmpeLD9mlLMIX1T1CehHyd5SL/zFPPHXmRqqA3lwsnTfkiVcZbyTjxn+tq0CQEYM
+                K57WtvQnkeqyCXRWuDysx8LAmq34r4m4mvQTenjbK+wb54w4bJU8+6oCek0KsllN
+                85GJ+RO32RqplCEsx90CQQDOKho5vNM9i0gdcN3UIGpanAl4o0LEJTn4NbgzSOaB
+                w+skzdnflRblEO9jB2jiV2wInKwDWLNYL+qXK6RSoTfJ
                 -----END RSA PRIVATE KEY-----
+
 
 
 
